@@ -58,7 +58,9 @@
                 </form>
 
             </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-left" id="uyari">
 
+            </div>
 
         </div>
 
@@ -80,15 +82,20 @@
         $('form').submit(function (e) {
             e.preventDefault();
 
-            if ($('#mesajlasma').val().length > 0) {
+            if ($('#mesajlasma').val().length >=2) {
                 socket.emit('newmessage', $('#mesajlasma').val());
                 $('#mesajlasma').val('');
+                $('#uyari').stop();
                 return false;
+            }else
+            {
+                $('#uyari').html("<div class='alert alert-danger'>Mesaj alanı boş olamaz en az 2 olmalı </div>").fadeIn(500).fadeOut(1000);
             }
 
         })
 
         socket.on('newmessage', function (msg) {
+            $('#mesajlar').animate({scrollTop:$('#mesajlar').height()},1000);
             $('#mesajlar').append("<div id='mesajblogu'>" + msg + "</div>")
         })
 
