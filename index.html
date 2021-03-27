@@ -74,7 +74,23 @@
 <script src="/jquery/jquery.min.js"></script>
 
 <script>
+    $(function (){
 
+        var socket = io();
+
+        $('form').submit(function (e){
+            e.preventDefault();
+
+            socket.emit('newmessage', $('#mesajlasma').val());
+            $('#mesajlasma').val('');
+            return false;
+        })
+
+        socket.on('newmessage', function (msg) {
+            $('#mesajlar').append("<div id='mesajblogu'>"+msg+"</div>")
+        })
+
+    })
 </script>
 
 </body>

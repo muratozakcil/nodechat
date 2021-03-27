@@ -16,7 +16,7 @@ io.on('connection', function (socket){
     console.log("Bir kullanıcı bağlandı")
 
     socket.on('newmessage', function (msg){
-       io.emit('mesajvar', msg)
+       io.emit('newmessage', msg)
     })
 
     socket.on('disconnect', function (){
