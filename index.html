@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node js Anlık Mesajlaşma Örneği</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
-     <style>
-        body{
+    <style>
+        body {
             color: #e6e8e8;
 
         }
+
         #mesajlar {
             min-height: 500px;
             max-height: 500px;
             background: #f6f6f6;
             border-radius: 2px;
-            border:1px solid #b9b9b9;
+            border: 1px solid #b9b9b9;
             overflow-y: scroll;
-            color:black ;
+            color: black;
         }
+
         #mesajblogu {
-            border-bottom:1px solid #dad9d9;
+            border-bottom: 1px solid #dad9d9;
             padding: 1px;
         }
 
@@ -44,9 +46,9 @@
 
                 </div>
 
-                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 mt-1" >
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 mt-1">
                     <form>
-                        <input id="mesajlasma" autocomplete="off" class="form-control bg-dark  text-white p-1 m-1" />
+                        <input id="mesajlasma" autocomplete="off" class="form-control bg-dark  text-white p-1 m-1"/>
                 </div>
 
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mt-2">
@@ -58,13 +60,10 @@
             </div>
 
 
-
-
         </div>
 
 
     </div>
-
 
 
 </div>
@@ -74,20 +73,23 @@
 <script src="/jquery/jquery.min.js"></script>
 
 <script>
-    $(function (){
+    $(function () {
 
         var socket = io();
 
-        $('form').submit(function (e){
+        $('form').submit(function (e) {
             e.preventDefault();
 
-            socket.emit('newmessage', $('#mesajlasma').val());
-            $('#mesajlasma').val('');
-            return false;
+            if ($('#mesajlasma').val().length > 0) {
+                socket.emit('newmessage', $('#mesajlasma').val());
+                $('#mesajlasma').val('');
+                return false;
+            }
+
         })
 
         socket.on('newmessage', function (msg) {
-            $('#mesajlar').append("<div id='mesajblogu'>"+msg+"</div>")
+            $('#mesajlar').append("<div id='mesajblogu'>" + msg + "</div>")
         })
 
     })
