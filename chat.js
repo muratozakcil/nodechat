@@ -5,6 +5,7 @@ const server = http.createServer(app)
 const io = require('socket.io')(server)
 const bodyparser = require('body-parser')
 const sharedsession = require('express-socket.io-session')
+const fs = require('fs')
 
 app.use(bodyparser.urlencoded({extended:false}))
 
@@ -61,6 +62,17 @@ io.on('connection', function (socket){
 
     socket.on('disconnect', function (){
         console.log("Bir kullanıcı ayrıldı")
+    })
+    socket.on('messagesave', function (messages){
+
+        var splitmesage = messages.trim()
+        var finismessage = splitmesage.split("*")
+        var end = finismessage.join("\n")
+
+        fs.writeFile("konusmalar.txt", end, function (err){
+            if (err) throw err
+            else console.log("Success")
+        })
     })
 
 })

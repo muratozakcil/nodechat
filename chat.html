@@ -58,6 +58,7 @@
                 </form>
 
             </div>
+            <button id="ciktial" class="btn btn-warning">Çıktı Al</button>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-left" id="uyari">
 
             </div>
@@ -96,7 +97,11 @@
 
         socket.on('newmessage', function (kulad, msg) {
             $('#mesajlar').animate({scrollTop:$('#mesajlar').height()},1000);
-            $('#mesajlar').append("<div id='mesajblogu'>" + kulad + " - " + msg + "</div>")
+            $('#mesajlar').append("<div id='mesajblogu'>" + kulad + " - " + msg + "*</div>")
+        })
+
+        $('#ciktial').click(function (){
+            socket.emit('messagesave',$('#mesajlar').text());
         })
 
     })
