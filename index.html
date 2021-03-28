@@ -1,66 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node js Anlık Mesajlaşma Örneği</title>
+
     <link rel="stylesheet" href="/css/bootstrap.css">
+
     <style>
-        body {
-            color: #e6e8e8;
+
+        .girispaneli {
+            background: #090a33;
+            border-radius: 20px;
+            border: 1px solid #6d6e98;
 
         }
-
-        #mesajlar {
-            min-height: 500px;
-            max-height: 500px;
-            background: #f6f6f6;
-            border-radius: 2px;
-            border: 1px solid #b9b9b9;
-            overflow-y: scroll;
-            color: black;
-        }
-
-        #mesajblogu {
-            border-bottom: 1px solid #dad9d9;
-            padding: 1px;
-        }
-
-
     </style>
 </head>
+
 <body>
 
 <div class="contanier">
-    <div class="row text-center">
+    <div class="row text-center mt-5">
 
-        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 mx-auto mt-3">
-            <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 mx-auto mt-3  girispaneli">
+            <form method="post" action="/chat" class="row p-2">
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center">
-                    <h3 class="text-dark">NODE JS - ANLIK MESAJLAŞMA UYGULAMASI</h3>
+                    <h3 class="text-white">CHAT GİRİŞ</h3>
 
                 </div>
 
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-left" id="mesajlar">
-
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-1">
+                        <input id="kuladi" autocomplete="off" class="form-control  p-1 mt-2"
+                               placeholder="İSİM GİRİNİZ" name="kulad"/>
                 </div>
 
-                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 mt-1">
-                    <form>
-                        <input id="mesajlasma" autocomplete="off" class="form-control bg-dark  text-white p-1 m-1"/>
-                </div>
-
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mt-2">
-                    <button class="btn btn-block btn-primary">GÖNDER</button>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-2">
+                    <button type="submit" class="btn btn-block btn-warning">GİRİŞ YAP</button>
 
                 </div>
                 </form>
 
-            </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-left" id="uyari">
-
-            </div>
 
         </div>
 
@@ -68,39 +50,12 @@
     </div>
 
 
+
 </div>
 
-
-<script src="/socket.io/socket.io.js"></script>
 <script src="/jquery/jquery.min.js"></script>
 
-<script>
-    $(function () {
-
-        var socket = io();
-
-        $('form').submit(function (e) {
-            e.preventDefault();
-
-            if ($('#mesajlasma').val().length >=2) {
-                socket.emit('newmessage', $('#mesajlasma').val());
-                $('#mesajlasma').val('');
-                $('#uyari').stop();
-                return false;
-            }else
-            {
-                $('#uyari').html("<div class='alert alert-danger'>Mesaj alanı boş olamaz en az 2 olmalı </div>").fadeIn(500).fadeOut(1000);
-            }
-
-        })
-
-        socket.on('newmessage', function (msg) {
-            $('#mesajlar').animate({scrollTop:$('#mesajlar').height()},1000);
-            $('#mesajlar').append("<div id='mesajblogu'>" + msg + "</div>")
-        })
-
-    })
-</script>
 
 </body>
+
 </html>
